@@ -1,0 +1,27 @@
+{
+  "name": "quadrent",
+  "version": "1.0.0",
+  "description": "It's spelled Quad*rent*, because now it won't live '_rent_ free' in your noodle!",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test --workspace=frontend && npm test --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adritek/quadrent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/adritek/quadrent/issues"
+  },
+  "homepage": "https://github.com/adritek/quadrent#readme"
+}
