@@ -1,0 +1,14 @@
+services:
+  couchdb:
+    image: couchdb:3.5.2
+    container_name: eisenhower-couchdb
+    ports:
+      - '5984:5984'
+    environment:
+      COUCHDB_USER: ${DATABASE_LOCAL_USER}
+      COUCHDB_PASSWORD: ${DATABASE_LOCAL_PASSWORD}
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+
+volumes:
+  couchdb_data:
