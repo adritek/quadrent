@@ -9,3 +9,15 @@ interface UseTasksReturn {
   addTask: (input: CreateTaskInput) => Promise<void>;
   moveTask: (id: string, rev: string, quadrant: Task['quadrant']) => Promise<void>;
 }
+
+export const useTasks = (): UseTasksReturn => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchTasks = useCallback(async () => {
+    try {
+      setIsLoading(true);
+    } catch (error) {}
+  });
+};
