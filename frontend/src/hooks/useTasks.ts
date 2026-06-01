@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { getTasks, createTask, updateTaskQuadrant } from '../api/tasks.js';
 import type { Task, CreateTaskInput } from '../types/task.js';
 
@@ -15,22 +15,28 @@ export const useTasks = (): UseTasksReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTasks = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const data = await getTasks();
-      setTasks(data);
-    } catch {
-      setError('Failed to load tasks');
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    void fetchTasks();
-  }, [fetchTasks]);
+    let cancelled = false;
+
+    const load = async (): Promise<void> => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await getTasks();
+        if (!cancelled) setTasks(data);
+      } catch {
+        if (!cancelled) setError('Failed to load tasks');
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    };
+
+    void load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const addTask = async (input: CreateTaskInput): Promise<void> => {
     const newTask = await createTask(input);
