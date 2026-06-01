@@ -18,6 +18,32 @@ export const useTasks = (): UseTasksReturn => {
   const fetchTasks = useCallback(async () => {
     try {
       setIsLoading(true);
-    } catch (error) {}
-  });
+      setError(null);
+      const data = await getTasks();
+      setTasks(data);
+    } catch {
+      setError('Failed to load tasks');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void fetchTasks();
+  }, [fetchTasks]);
+
+  const addTask = async (input: CreateTaskInput): Promise<void> => {
+    const newTask = await createTask(input);
+    setTasks((prev) => [...prev, newTask]);
+  };
+
+  const moveTask = async (
+    id: string,
+    rev: string,
+    quadrant: Task['quadrant'],
+  ): Promise<void> => {
+    const updatedTask = await updateTaskQuadrant(id, rev, quadrant);
+    setTasks((prev) => prev.map((task) => (task._id === id ? updatedTask : task)));
+  };
+  return { tasks, isLoading, error, addTask, moveTask };
 };
