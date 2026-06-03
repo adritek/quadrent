@@ -1,3 +1,4 @@
+import { TaskCard } from './TaskCard.js';
 import type { Task } from '../types/task.js';
 
 interface TaskListProps {
@@ -18,12 +19,7 @@ export const TaskList = ({ tasks, isLoading, error }: TaskListProps) => {
         <p className="text-sm text-gray-400 p-2">No tasks yet</p>
       )}
       {unassigned.map((task) => (
-        <li
-          key={task._id}
-          className="rounded border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm cursor-grab"
-        >
-          {task.title}
-        </li>
+        <TaskCard key={task._id} task={task} />
       ))}
     </ul>
   );
