@@ -1,7 +1,10 @@
+import { DndContext } from '@dnd-kit/core';
+import type { DragEndEvent } from '@dnd-kit/core';
 import { useTasks } from './hooks/useTasks.js';
 import { TaskInput } from './components/TaskInput.js';
 import { TaskList } from './components/TaskList.js';
 import { QuadrantGrid } from './components/QuadrantGrid.js';
+import type { Quadrant } from './types/task.js';
 
 export default function App() {
   const { tasks, isLoading, error, addTask } = useTasks();
