@@ -1,3 +1,5 @@
+import { useDroppable } from '@dnd-kit/core';
+import { TaskCard } from './TaskCard.js';
 import type { Task, Quadrant } from '../types/task.js';
 
 interface QuadrantBoxProps {
@@ -15,19 +17,21 @@ export const QuadrantBox = ({
 }: QuadrantBoxProps) => {
   const assigned = tasks.filter((t) => t.quadrant === quadrant);
 
+  const { setNodeRef, isOver } = useDroppable({
+    id: quadrant as string,
+  });
+
   return (
-    <div className={`flex flex-col rounded border-2 p-3 ${className}`}>
+    <div
+      ref={setNodeRef}
+      className={`flex flex-col rounded border-2 p-3 transition-colors ${isOver ? 'brightness-95' : ''} ${className}`}
+    >
       <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide">
         {title}
       </h2>
       <ul className="flex flex-col gap-2">
         {assigned.map((task) => (
-          <li
-            key={task._id}
-            className="rounded border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm"
-          >
-            {task.title}
-          </li>
+          <TaskCard key={task._id} task={task} />
         ))}
       </ul>
     </div>
