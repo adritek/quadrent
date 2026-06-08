@@ -10,5 +10,17 @@ services:
     volumes:
       - couchdb_data:/opt/couchdb/data
 
+  backend:
+    build: ./backend
+    container_name: eisenhower-backend
+    ports:
+      - '3001:3001'
+    environment:
+      PORT: 3001
+      COUCHDB_URL: http://${COUCHDB_LOCAL_USER}:${COUCHDB_LOCAL_PASSWORD}@couchdb:5984
+      NODE_ENV: production
+    depends_on:
+      - couchdb
+
 volumes:
   couchdb_data:
