@@ -17,20 +17,15 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v6
         with:
-          node-version: 26.3.0
+          node-version: 26
           cache: 'npm'
 
-      - name: Install frontend deps
-        working-directory: frontend
+      - name: Install all dependencies
         run: npm ci
 
       - name: Run frontend tests
         working-directory: frontend
         run: npm test
-
-      - name: Install backend deps
-        working-directory: backend
-        run: npm ci
 
       - name: Run backend tests
         working-directory: backend
