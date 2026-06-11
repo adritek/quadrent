@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/adritek/quadrent/issues"
   },
-  "homepage": "https://github.com/adritek/quadrent#readme"
+  "homepage": "https://github.com/adritek/quadrent#readme",
+  "devDependencies": {
+    "vitest": "^4.1.8"
+  }
 }
