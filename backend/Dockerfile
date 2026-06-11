@@ -3,7 +3,7 @@ FROM node:26.3.0-alpine
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts --no-workspaces
 
 COPY . .
 
