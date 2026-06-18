@@ -25,10 +25,10 @@ export default function App() {
 
   return (
     <DndContext onDragEnd={handleDragEvent}>
-      <div className="flex h-screen bg-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex h-screen bg-gray-100">
         {/* Left sidebar — todo list */}
         <aside className="flex w-72 flex-col border-r border-gray-200 bg-white shadow-sm">
-          <div className="border-b border-gray-200 p-4">
+          <div className=" p-4">
             <h1 className="text-lg font-bold text-gray-800">Quadrent</h1>
             <p className="text-xs text-gray-500">Drag tasks into the matrix</p>
           </div>
