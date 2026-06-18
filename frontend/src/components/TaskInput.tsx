@@ -22,7 +22,7 @@ export const TaskInput = ({ onAdd }: TaskInputProps) => {
   };
 
   return (
-    <div className="flex gap-2 p2">
+    <div className="flex gap-2 px-2.5 mb-1">
       <input
         type="text"
         value={title}
