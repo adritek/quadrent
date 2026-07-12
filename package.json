@@ -1,7 +1,7 @@
 {
   "name": "quadrent",
   "version": "1.0.0",
-  "description": "It's spelled Quad*rent*, because now it won't live '_rent_ free' in your noodle!",
+  "description": "Quad*rent* the Eisenhower matrix - sort ya life 'bing-bong'",
   "main": "index.js",
   "scripts": {
     "test": "npm test --workspace=frontend && npm test --workspace=backend",
