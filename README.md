@@ -24,3 +24,8 @@ Lives on [Vercel](https://quadrent-frontend.vercel.app/), and [Render](https://q
 | `test/`                | `test:`             | Adding, updating, or fixing test suites.                  |
 | `docs/`                | `docs:`             | Writing or updating documentation, READMEs, or wikis.     |
 | `chore/` or `cicd/`    | `chore:` or `cicd:` | Updating build scripts, dependencies, or CI/CD pipelines. |
+
+## CICD
+
+CI/CD is handled via Github Actions - more to come on this, but for now tests and build checks run off the `push` webhook on `main` branch.  
+So basically whenever there's a 'release'.
