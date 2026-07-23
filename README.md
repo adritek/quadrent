@@ -16,14 +16,14 @@ Lives on [Vercel](https://quadrent-frontend.vercel.app/), and [Render](https://q
 - Use descriptive branch names: `feature/short-description`
 - Push, and make a pull request
 
-| Branch Prefix          | Commit Prefix       | Purpose / Type of Change                                  |
-| ---------------------- | ------------------- | --------------------------------------------------------- |
-| `feature/` or `feat/`  | `feat:`             | Adding a brand new feature or capability.                 |
-| `bugfix/` or `hotfix/` | `fix:` or `hotfix:` | Repairing broken functionality or solving a bug.          |
-| `ui/`                  | `ui:`               | Visual changes, CSS, layout tweaks, or asset updates.     |
-| `test/`                | `test:`             | Adding, updating, or fixing test suites.                  |
-| `docs/`                | `docs:`             | Writing or updating documentation, READMEs, or wikis.     |
-| `chore/` or `cicd/`    | `chore:` or `cicd:` | Updating build scripts, dependencies, or CI/CD pipelines. |
+| Branch Prefix       | Commit Prefix       | Purpose / Type of Change                                  |
+| ------------------- | ------------------- | --------------------------------------------------------- |
+| `feature/`          | `feat:`             | Adding a brand new feature or capability.                 |
+| `hotfix/`           | `hotfix:`           | Repairing broken functionality or solving a bug.          |
+| `ui/`               | `ui:`               | Visual changes, CSS, layout tweaks, or asset updates.     |
+| `test/`             | `test:`             | Adding, updating, or fixing test suites.                  |
+| `docs/`             | `docs:`             | Writing or updating documentation, READMEs, or wikis.     |
+| `chore/` or `cicd/` | `chore:` or `cicd:` | Updating build scripts, dependencies, or CI/CD pipelines. |
 
 ## CICD
 
