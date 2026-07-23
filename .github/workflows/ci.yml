@@ -15,7 +15,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,16 +32,17 @@ jobs:
         # run: npm ci
         run: npm install --include=optional
 
-      - name: Run frontend tests
-        working-directory: frontend
-        run: npm test
+      - name: Build
+        run: npm run build
 
-      - name: Run backend tests
-        working-directory: backend
-        run: npm test
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
 
   deploy-frontend:
-    needs: test
+    needs: validate
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
