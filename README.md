@@ -7,7 +7,7 @@ Lives on [Vercel](https://quadrent-frontend.vercel.app/), and [Render](https://q
 
 ## Usage
 
-`docker compose up` starts the db/servers  
+`docker compose up` starts the CouchDB and Node server  
 `npm run dev` starts the front and backends
 
 ## Want to help out?
