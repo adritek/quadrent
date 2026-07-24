@@ -5,10 +5,21 @@ It's spelled Quad***rent***, because now it won't live '_rent_ free' in your noo
 It's MonoRific! (a monorepo 🪨) - built with React/TypeScript, Docker and Vitest.  
 Lives on [Vercel](https://quadrent-frontend.vercel.app/), and [Render](https://quadrent-backend.onrender.com/).
 
-## Usage
+## Development
 
 `docker compose up` starts the CouchDB and Node server  
 `npm run dev` starts the front and backends
+
+### Node
+
+This project uses Node.js **24.11.0**  
+If you're using `nvm`:
+
+```
+nvm use
+```
+
+This will automatically select the version defined in `.nvmrc`
 
 ## Want to help out?
 
