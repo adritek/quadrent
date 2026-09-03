@@ -1,13 +1,12 @@
-import { response } from 'express';
 import Nano from 'nano';
 
-const DATABASE_URL = process.env.COUCHDB_URL;
+const COUCHDB_URL = process.env.COUCHDB_URL;
 
-if (!DATABASE_URL) {
-  throw new Error('DATABASE_URL is not defined in environment variables');
+if (!COUCHDB_URL) {
+  throw new Error('COUCHDB_URL is not defined in environment variables');
 }
 
-const nano = Nano(DATABASE_URL);
+const nano = Nano(COUCHDB_URL);
 
 export const tasksDb = nano.db.use('tasks');
 
