@@ -1,0 +1,35 @@
+name: '🐛 Bug Report'
+description: File a bug report to track an error or broken behavior
+title: '[Bug]: '
+labels: ['bug', 'triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill out this form with as much detail as possible to help debug the issue.
+  - type: textarea
+    id: description
+    attributes:
+      label: Current Behavior
+      description: A clear and concise description of what the bug is.
+      placeholder: E.g., The login button crashes the app when clicked.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+      placeholder: E.g., The user should be redirected to the dashboard.
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.
+      value: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: false
