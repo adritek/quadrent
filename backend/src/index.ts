@@ -17,8 +17,13 @@ app.get('/health', (_req, res) => {
 
 app.use('/tasks', taskRoutes);
 
-await initDb();
-
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost: ${PORT}`);
 });
+
+try {
+  await initDb();
+} catch (error) {
+  console.log(`Could not initialise the database: ${error}`);
+  process.exit(1);
+}
