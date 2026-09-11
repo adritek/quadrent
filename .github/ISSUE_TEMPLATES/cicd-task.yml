@@ -1,0 +1,44 @@
+name: '🔄 CI/CD & Automation Task'
+description: Track updates, fixes, or optimizations to GitHub Actions, Docker, or deployments
+title: '[CI/CD]: '
+labels: ['ci-cd', 'automation']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to log infrastructure tasks, fix broken workflows, or upgrade environment configurations.
+  - type: dropdown
+    id: task-type
+    attributes:
+      label: Task Category
+      description: What type of automation work is this?
+      options:
+        - 🐛 Pipeline Failure / Bug Fix
+        - 🚀 Deployment Upgrade (Vercel, Docker, etc.)
+        - ⚡ Optimization (Speed up caching, dependencies)
+        - 🔒 Security / Permissions / Secrets Update
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective & Context
+      description: What are you trying to accomplish or fix?
+      placeholder: E.g., The 'bump-version' step needs write permissions to successfully push tags.
+    validations:
+      required: true
+  - type: textarea
+    id: workflow-impact
+    attributes:
+      label: Affected Files / Steps
+      description: Which files or specific workflow steps are involved?
+      placeholder: E.g., .github/workflows/ci.yml, Dockerfile, package.json
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Definition of Done
+      description: What needs to happen for this issue to be considered resolved?
+      value: |
+        - [ ] PR triggers the workflow successfully
+        - [ ] Tests pass on ubuntu-latest
+        - [ ] Tags/Deployments trigger only on main push events
