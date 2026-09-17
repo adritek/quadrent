@@ -1,13 +1,37 @@
 import { DndContext } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core';
 import { useTasks } from './hooks/useTasks.js';
+import { useWakeUp } from './hooks/useWakeUp.js';
 import { TaskInput } from './components/TaskInput.js';
 import { TaskList } from './components/TaskList.js';
 import { QuadrantGrid } from './components/QuadrantGrid.js';
 import type { Quadrant } from './types/task.js';
 
 export default function App() {
+  const { isWakingUp, wakeupError } = useWakeUp();
   const { tasks, isLoading, error, addTask, moveTask } = useTasks();
+
+  if (isWakingUp) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <p className="text-lg font-semibold text-gray-700">
+            Waking up servers...
+          </p>
+          <p className="text-sm text-gray-500 mt-2">
+            This can take up to 60 seconds on first load.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  if (wakeupError) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gray-100">
+        <p className="text-red-500">{wakeupError}</p>
+      </div>
+    );
+  }
 
   const handleDragEvent = (event: DragEndEvent) => {
     const { active, over } = event;
