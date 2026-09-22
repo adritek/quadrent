@@ -3,7 +3,10 @@ import { http, HttpResponse, delay } from 'msw';
 export const coldStartScenario = [
   http.get('http://localhost:3001/health', async () => {
     await delay(8000);
-    return HttpResponse.json({ status: 'ok', message: 'Server is running' });
+    return HttpResponse.json({
+      status: 'ok',
+      message: 'Server is running',
+    });
   }),
 
   http.get('http://localhost:3001/tasks', async () => {
