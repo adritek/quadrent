@@ -1,15 +1,11 @@
 import { http, HttpResponse } from 'msw';
 
 export const handlers = [
-  http.get('https://couchdb-3-5-2.onrender.com', () => {
-    return HttpResponse.json({ couchdb: 'Welcome', version: '3.5.2' });
-  }),
-
   http.get('*/health', () => {
     return HttpResponse.json({ status: 'ok', message: 'Server is running' });
   }),
 
-  http.post('*/tasks', () => {
+  http.get('*/tasks', () => {
     return HttpResponse.json([]);
   }),
 

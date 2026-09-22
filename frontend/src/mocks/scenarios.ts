@@ -1,31 +1,29 @@
 import { http, HttpResponse, delay } from 'msw';
 
-const DB_ENDPOINT = 'https://couch-3-5-2.onrender.com';
-
 export const coldStartScenario = [
-  http.get(DB_ENDPOINT, async () => {
+  http.get('http://localhost:3001/health', async () => {
     await delay(8000);
-    return HttpResponse.json({ couchdb: 'Welcome', version: '3.5.2' });
+    return HttpResponse.json({ status: 'ok', message: 'Server is running' });
   }),
 
-  http.get('*/health', async () => {
+  http.get('http://localhost:3001/tasks', async () => {
     await delay(5000);
-    return HttpResponse.json({ status: 'ok', message: 'Server is running' });
+    return HttpResponse.json([]);
   }),
 ];
 
 export const serverDownScenario = [
-  http.get(DB_ENDPOINT, () => {
+  http.get('http://localhost:3001/health', () => {
     return HttpResponse.error();
   }),
 
-  http.get('*/health', () => {
+  http.get('http://localhost:3001/tasks', () => {
     return HttpResponse.error();
   }),
 ];
 
 export const slowNetworkScenario = [
-  http.get('*/tasks', async () => {
+  http.get('http://localhost:3001/tasks', async () => {
     await delay(3000);
     return HttpResponse.json([]);
   }),

@@ -6,10 +6,11 @@ import { TaskInput } from './components/TaskInput.js';
 import { TaskList } from './components/TaskList.js';
 import { QuadrantGrid } from './components/QuadrantGrid.js';
 import type { Quadrant } from './types/task.js';
+import { DevPanel } from './mocks/DevPanel.js';
 
 export default function App() {
   const { isWakingUp, wakeupError } = useWakeUp();
-  const { tasks, isLoading, error, addTask, moveTask } = useTasks();
+  const { tasks, isLoading, error, addTask, moveTask, refetch } = useTasks();
 
   if (isWakingUp) {
     return (
@@ -22,13 +23,15 @@ export default function App() {
             This can take up to 60 seconds on first load.
           </p>
         </div>
+        <DevPanel onRefetch={refetch} />
       </div>
     );
   }
   if (wakeupError) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-100">
-        <p className="text-red-500">{wakeupError}</p>
+        <p className="text-red-600">{wakeupError}</p>
+        <DevPanel onRefetch={refetch} />
       </div>
     );
   }
@@ -64,6 +67,7 @@ export default function App() {
         <main className="flex-1">
           <QuadrantGrid tasks={tasks} />
         </main>
+        <DevPanel onRefetch={refetch} />
       </div>
     </DndContext>
   );
