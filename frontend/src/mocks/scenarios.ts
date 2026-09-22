@@ -10,6 +10,7 @@ export const coldStartScenario = [
   }),
 
   http.get('http://localhost:3001/tasks', async () => {
+    console.log('COLD START scenario fired');
     await delay(5000);
     return HttpResponse.json([]);
   }),
@@ -21,6 +22,7 @@ export const serverDownScenario = [
   }),
 
   http.get('http://localhost:3001/tasks', () => {
+    console.error('SERVER DOWN scenario fired');
     return HttpResponse.error();
   }),
 ];

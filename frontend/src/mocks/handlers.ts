@@ -6,6 +6,7 @@ export const handlers = [
   }),
 
   http.get('*/tasks', () => {
+    console.log('DEFAULT handler fired');
     return HttpResponse.json([]);
   }),
 
