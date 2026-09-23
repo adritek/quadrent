@@ -12,7 +12,7 @@ export const tasksDb = nano.db.use('tasks');
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const waitForCouchDB = async (retries = 10, delay = 5000): Promise<void> => {
+const waitForCouchDB = async (retries = 10, delay = 10000): Promise<void> => {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       await nano.info();
