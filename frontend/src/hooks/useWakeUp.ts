@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 const IS_PRODUCTION = import.meta.env.MODE === 'production';
-const COUCHDB_URL = 'https://couchdb-3-5-2.onrender.com';
 const BACKEND_URL = import.meta.env.VITE_API_URL ?? 'https://localhost:3001';
 
 interface UseWakeUpReturn {
@@ -21,7 +20,6 @@ export const useWakeUp = (): UseWakeUpReturn => {
 
     const wake = async () => {
       try {
-        await fetch(COUCHDB_URL, { signal: AbortSignal.timeout(120000) });
         await fetch(`${BACKEND_URL}/health`, {
           signal: AbortSignal.timeout(120000),
         });
@@ -32,7 +30,7 @@ export const useWakeUp = (): UseWakeUpReturn => {
       } catch {
         if (!cancelled) {
           setWakeupError(
-            'Services are taking too long to wake up. Please refresh.',
+            'Services are taking too long to wake up. Please refresh. Free tier limitations',
           );
           setIsWakingUp(false);
         }
