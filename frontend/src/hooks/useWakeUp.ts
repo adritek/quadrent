@@ -21,7 +21,6 @@ export const useWakeUp = (): UseWakeUpReturn => {
 
     const wake = async () => {
       try {
-        await fetch(COUCHDB_URL, { signal: AbortSignal.timeout(120000) });
         await fetch(`${BACKEND_URL}/health`, {
           signal: AbortSignal.timeout(120000),
         });
@@ -32,7 +31,7 @@ export const useWakeUp = (): UseWakeUpReturn => {
       } catch {
         if (!cancelled) {
           setWakeupError(
-            'Services are taking too long to wake up. Please refresh.',
+            'Services are taking too long to wake up. Please refresh. Free tier limitations',
           );
           setIsWakingUp(false);
         }
