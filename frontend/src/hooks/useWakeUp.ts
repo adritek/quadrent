@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 const IS_PRODUCTION = import.meta.env.MODE === 'production';
-const COUCHDB_URL = 'https://couchdb-3-5-2.onrender.com';
 const BACKEND_URL = import.meta.env.VITE_API_URL ?? 'https://localhost:3001';
 
 interface UseWakeUpReturn {
