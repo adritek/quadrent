@@ -10,6 +10,10 @@ Lives on [Vercel](https://quadrent-frontend.vercel.app/), and [Render](https://q
 `docker compose up` starts the CouchDB and Node server  
 `npm run dev` starts the front and backends
 
+### Production service wake-up
+
+The frontend pings both the Node `/health` endpoint and the CouchDB root URL when it loads in production. Set `VITE_API_URL` and `VITE_COUCHDB_URL` in the frontend hosting provider's build environment, then redeploy. `VITE_COUCHDB_URL` should be the public CouchDB URL without credentials. Its request uses `no-cors` because the browser only needs to reach CouchDB to wake it; it does not need to read the response. That's free tier baby!
+
 ### Node
 
 This project uses Node.js **24.11.0**  
