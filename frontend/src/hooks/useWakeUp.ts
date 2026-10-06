@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 
 const IS_PRODUCTION = import.meta.env.MODE === 'production';
 const BACKEND_URL = import.meta.env.VITE_API_URL ?? 'https://localhost:3001';
+const COUCHDB_URL =
+  import.meta.env.VITE_COUCHDB_URL ?? 'https://couchdb-3-5-2.onrender.com';
 
 interface UseWakeUpReturn {
   isWakingUp: boolean;
@@ -20,9 +22,16 @@ export const useWakeUp = (): UseWakeUpReturn => {
 
     const wake = async () => {
       try {
-        await fetch(`${BACKEND_URL}/health`, {
-          signal: AbortSignal.timeout(120000),
-        });
+        await Promise.all([
+          fetch(`${BACKEND_URL}/health`, {
+            signal: AbortSignal.timeout(120000),
+          }),
+          fetch(COUCHDB_URL, {
+            mode: 'no-cors',
+            cache: 'no-store',
+            signal: AbortSignal.timeout(120000),
+          }),
+        ]);
         if (!cancelled) {
           setIsReady(true);
           setIsWakingUp(false);
