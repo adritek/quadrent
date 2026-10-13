@@ -1,0 +1,103 @@
+name: 😎 Accessibility issue
+description: Report a barrier that affects keyboard, screen reader, or other assistive technology users
+title: '[A11y]: '
+labels: ['a11y']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make this app usable for everyone. Please fill in as much as you can.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What is the problem?
+      description: A short description of the barrier.
+      placeholder: "The delete button on task cards is announced as 'X' by screen readers."
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Where does it happen?
+      description: Page, component, or URL.
+      placeholder: 'Task card (Eisenhower matrix), delete button'
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1. Go to '...'
+        2. Using '...' (keyboard / screen reader / zoom), do '...'
+        3. Observe '...'
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should happen for an assistive technology user?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact
+      options:
+        - Blocker (task cannot be completed)
+        - Major (task is very difficult)
+        - Minor (annoying but workable)
+        - Enhancement (improvement, not a barrier)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: affected
+    attributes:
+      label: Who is affected?
+      options:
+        - label: Keyboard-only users
+        - label: Screen reader users
+        - label: Low-vision / zoom / high-contrast users
+        - label: Color-blind users
+        - label: Voice control users
+        - label: Motion-sensitive users
+        - label: Other (describe above)
+
+  - type: input
+    id: tech
+    attributes:
+      label: Assistive technology
+      description: Name and version, if applicable.
+      placeholder: 'VoiceOver on macOS 15, NVDA 2025.1, none (keyboard only)'
+
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and OS
+      placeholder: 'Chrome 130 on macOS 15'
+
+  - type: input
+    id: wcag
+    attributes:
+      label: Related WCAG criterion (optional)
+      placeholder: '4.1.2 Name, Role, Value'
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots, recordings, or other context
+      description: You can paste images or drag files in here.
