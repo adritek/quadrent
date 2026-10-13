@@ -19,9 +19,9 @@ export const TaskCard = ({ task }: TaskCardProps) => {
 
   const style = {
     transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? 0.4 : 1,
+    opacity: isDragging ? 0.7 : 1,
     cursor: isDragging ? 'grabbing' : 'grab',
-    zIndex: isDragging ? 25 : 30,
+    zIndex: isDragging ? 100 : 'auto',
   };
 
   return (
@@ -34,6 +34,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
     >
       {task.title}
       <button
+        aria-label="Delete task"
         className="text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 inline-block rounded"
         onPointerDown={stopPropagation}
         onClick={(e) => {
