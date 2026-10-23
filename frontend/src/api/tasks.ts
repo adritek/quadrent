@@ -17,6 +17,10 @@ export const createTask = async (input: CreateTaskInput): Promise<Task> => {
   return response.data;
 };
 
+export const deleteTask = async (_id: string, _rev: string): Promise<void> => {
+  await api.delete(`/tasks/${_id}`, { params: { rev: _rev } });
+};
+
 export const updateTaskQuadrant = async (
   id: string,
   rev: string,

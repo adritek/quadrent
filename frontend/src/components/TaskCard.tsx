@@ -4,9 +4,10 @@ import type { Task } from '../types/task.js';
 
 interface TaskCardProps {
   task: Task;
+  removeTask: (id: string, rev: string) => Promise<void>;
 }
 
-export const TaskCard = ({ task }: TaskCardProps) => {
+export const TaskCard = ({ task, removeTask }: TaskCardProps) => {
   const stopPropagation = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.stopPropagation();
   };
@@ -38,8 +39,8 @@ export const TaskCard = ({ task }: TaskCardProps) => {
         className="text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 inline-block rounded"
         onPointerDown={stopPropagation}
         onClick={(e) => {
-          console.log('delete');
           stopPropagation(e);
+          void removeTask(task._id, task._rev);
         }}
       >
         X
