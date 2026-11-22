@@ -74,4 +74,39 @@ describe('useTasks', () => {
     expect(result.current.tasks).toHaveLength(2);
     expect(result.current.tasks[1]?.title).toBe('New task');
   });
+
+  it('removes a task after the delete request succeeds', async () => {
+    vi.mocked(tasksApi.getTasks).mockResolvedValue(mockTasks);
+    vi.mocked(tasksApi.deleteTask).mockResolvedValue(undefined);
+
+    const { result } = renderHook(() => useTasks());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    await act(async () => {
+      await result.current.removeTask('abc123', '1-xyz');
+    });
+
+    expect(tasksApi.deleteTask).toHaveBeenCalledWith('abc123', '1-xyz');
+    expect(result.current.tasks).toEqual([]);
+  });
+
+  it('keeps a task when the delete request fails', async () => {
+    vi.mocked(tasksApi.getTasks).mockResolvedValue(mockTasks);
+    vi.mocked(tasksApi.deleteTask).mockRejectedValue(new Error('Delete failed'));
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const { result } = renderHook(() => useTasks());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    await act(async () => {
+      await result.current.removeTask('abc123', '1-xyz');
+    });
+
+    expect(result.current.tasks).toEqual(mockTasks);
+    expect(consoleError).toHaveBeenCalledWith(
+      'Failed to delete task: abc123',
+      expect.any(Error),
+    );
+    consoleError.mockRestore();
+  });
 });

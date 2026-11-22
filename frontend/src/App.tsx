@@ -10,7 +10,8 @@ import { DevPanel } from './mocks/DevPanel.js';
 
 export default function App() {
   const { isWakingUp, wakeupError } = useWakeUp();
-  const { tasks, isLoading, error, addTask, moveTask, refetch } = useTasks();
+  const { tasks, isLoading, error, removeTask, addTask, moveTask, refetch } =
+    useTasks();
 
   if (isWakingUp) {
     return (
@@ -60,12 +61,17 @@ export default function App() {
             <p className="text-xs text-gray-500">Drag tasks into the matrix</p>
           </div>
           <TaskInput onAdd={addTask} />
-          <TaskList tasks={tasks} isLoading={isLoading} error={error} />
+          <TaskList
+            tasks={tasks}
+            isLoading={isLoading}
+            error={error}
+            removeTask={removeTask}
+          />
         </aside>
 
         {/* Right — quadrant grid */}
         <main className="flex-1">
-          <QuadrantGrid tasks={tasks} />
+          <QuadrantGrid removeTask={removeTask} tasks={tasks} />
         </main>
         <DevPanel onRefetch={refetch} />
       </div>

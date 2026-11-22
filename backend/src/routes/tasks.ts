@@ -39,7 +39,7 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// patch
+// patch or move card to a different quadrant
 router.patch('/:id', async (req: Request, res: Response) => {
   try {
     const id = String(req.params['id']);
@@ -52,6 +52,17 @@ router.patch('/:id', async (req: Request, res: Response) => {
     res.json({ ...updated, _rev: response.rev });
   } catch (error) {
     res.status(500).json({ error: 'Failed to update task' });
+  }
+});
+
+router.delete('/:id', async (req: Request, res: Response) => {
+  try {
+    const id = String(req.params['id']);
+    await tasksDb.destroy(id, req.query.rev as string);
+    res.status(204).end();
+  } catch (error) {
+    console.error('Failed notice: ', error);
+    res.status(500).json({ error: 'Failed to delete task' });
   }
 });
 

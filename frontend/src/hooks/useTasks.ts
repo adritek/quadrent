@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import { getTasks, createTask, updateTaskQuadrant } from '../api/tasks.js';
+import {
+  getTasks,
+  createTask,
+  deleteTask,
+  updateTaskQuadrant,
+} from '../api/tasks.js';
 import type { Task, CreateTaskInput } from '../types/task.js';
 
 interface UseTasksReturn {
@@ -9,6 +14,7 @@ interface UseTasksReturn {
   addTask: (input: CreateTaskInput) => Promise<void>;
   moveTask: (id: string, rev: string, quadrant: Task['quadrant']) => Promise<void>;
   refetch: () => void;
+  removeTask: (id: string, rev: string) => Promise<void>;
 }
 
 export const useTasks = (): UseTasksReturn => {
@@ -55,5 +61,17 @@ export const useTasks = (): UseTasksReturn => {
     const updatedTask = await updateTaskQuadrant(id, rev, quadrant);
     setTasks((prev) => prev.map((task) => (task._id === id ? updatedTask : task)));
   };
-  return { tasks, isLoading, error, addTask, moveTask, refetch };
+
+  const removeTask = async (id: string, rev: string): Promise<void> => {
+    try {
+      await deleteTask(id, rev);
+      console.log(`Task ${id} deleted from server`);
+      setTasks((prev) => prev.filter((task) => task._id !== id));
+      console.log(`Task ${id} removed from local state`);
+    } catch (error) {
+      console.error(`Failed to delete task: ${id}`, error);
+    }
+  };
+
+  return { tasks, isLoading, error, removeTask, addTask, moveTask, refetch };
 };

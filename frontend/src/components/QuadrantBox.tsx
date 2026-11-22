@@ -7,6 +7,7 @@ interface QuadrantBoxProps {
   quadrant: Quadrant;
   tasks: Task[];
   className?: string;
+  removeTask: (id: string, rev: string) => Promise<void>;
 }
 
 export const QuadrantBox = ({
@@ -14,6 +15,7 @@ export const QuadrantBox = ({
   quadrant,
   tasks,
   className = '',
+  removeTask,
 }: QuadrantBoxProps) => {
   const assigned = tasks.filter((t) => t.quadrant === quadrant);
 
@@ -31,7 +33,7 @@ export const QuadrantBox = ({
       </h2>
       <ul className="flex flex-col gap-2">
         {assigned.map((task) => (
-          <TaskCard key={task._id} task={task} />
+          <TaskCard removeTask={removeTask} key={task._id} task={task} />
         ))}
       </ul>
     </div>

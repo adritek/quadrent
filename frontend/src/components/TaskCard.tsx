@@ -4,9 +4,14 @@ import type { Task } from '../types/task.js';
 
 interface TaskCardProps {
   task: Task;
+  removeTask: (id: string, rev: string) => Promise<void>;
 }
 
-export const TaskCard = ({ task }: TaskCardProps) => {
+export const TaskCard = ({ task, removeTask }: TaskCardProps) => {
+  const stopPropagation = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+  };
+
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable(
     {
       id: task._id,
@@ -15,8 +20,9 @@ export const TaskCard = ({ task }: TaskCardProps) => {
 
   const style = {
     transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? 0.4 : 1,
+    opacity: isDragging ? 0.7 : 1,
     cursor: isDragging ? 'grabbing' : 'grab',
+    zIndex: isDragging ? 100 : 'auto',
   };
 
   return (
@@ -25,9 +31,20 @@ export const TaskCard = ({ task }: TaskCardProps) => {
       style={style}
       {...listeners}
       {...attributes}
-      className="rounded border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm"
+      className="flex items-baseline justify-between rounded border border-gray-200 bg-white px-3 py-1 text-sm shadow-sm"
     >
       {task.title}
+      <button
+        aria-label="Delete task"
+        className="text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 inline-block rounded"
+        onPointerDown={stopPropagation}
+        onClick={(e) => {
+          stopPropagation(e);
+          void removeTask(task._id, task._rev);
+        }}
+      >
+        X
+      </button>
     </li>
   );
 };
