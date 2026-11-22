@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { DndContext } from '@dnd-kit/core';
 import { QuadrantBox } from '../components/QuadrantBox';
@@ -24,6 +24,8 @@ const mockTasks: Task[] = [
 ];
 
 describe('Quadrant box', () => {
+  const removeTask = vi.fn().mockResolvedValue(undefined);
+
   it('should render the quadrant titles', () => {
     render(
       <DndContext>
@@ -31,6 +33,7 @@ describe('Quadrant box', () => {
           title="Urgent & Important"
           quadrant="urgent-important"
           tasks={mockTasks}
+          removeTask={removeTask}
         />
       </DndContext>,
     );
@@ -44,6 +47,7 @@ describe('Quadrant box', () => {
           title="Urgent & Important"
           quadrant="urgent-important"
           tasks={mockTasks}
+          removeTask={removeTask}
         />
       </DndContext>,
     );
