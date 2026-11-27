@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import type { CreateTaskInput } from '../types/task.js';
+import { useTaskContext } from '../context/TaskContext.js';
 
-interface TaskInputProps {
-  onAdd: (input: CreateTaskInput) => Promise<void>;
-}
-
-export const TaskInput = ({ onAdd }: TaskInputProps) => {
+export const TaskInput = () => {
+  const { addTask } = useTaskContext();
   const [title, setTitle] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleSubmit = async () => {
     if (title.trim() === '') return;
     setIsSubmitting(true);
-    await onAdd({ title });
+    await addTask({ title });
     setTitle('');
     setIsSubmitting(false);
   };

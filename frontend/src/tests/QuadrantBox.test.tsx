@@ -1,8 +1,12 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { DndContext } from '@dnd-kit/core';
 import { QuadrantBox } from '../components/QuadrantBox';
+import { TaskProvider } from '../context/TaskProvider';
 import type { Task } from '../types/task.js';
+import * as tasksApi from '../api/tasks';
+
+vi.mock('../api/tasks');
 
 const mockTasks: Task[] = [
   {
@@ -24,34 +28,38 @@ const mockTasks: Task[] = [
 ];
 
 describe('Quadrant box', () => {
-  const removeTask = vi.fn().mockResolvedValue(undefined);
+  beforeEach(() => {
+    vi.resetAllMocks();
+    vi.mocked(tasksApi.getTasks).mockResolvedValue(mockTasks);
+  });
 
-  it('should render the quadrant titles', () => {
+  it('should render the quadrant titles', async () => {
     render(
-      <DndContext>
-        <QuadrantBox
-          title="Urgent & Important"
-          quadrant="urgent-important"
-          tasks={mockTasks}
-          removeTask={removeTask}
-        />
-      </DndContext>,
+      <TaskProvider>
+        <DndContext>
+          <QuadrantBox
+            title="Urgent & Important"
+            quadrant="urgent-important"
+          />
+        </DndContext>
+      </TaskProvider>,
     );
+    await screen.findByText('Write tests');
     expect(screen.getByText('Urgent & Important')).toBeInTheDocument();
   });
 
-  it('only renders tasks assigned to its quadrant', () => {
+  it('only renders tasks assigned to its quadrant', async () => {
     render(
-      <DndContext>
-        <QuadrantBox
-          title="Urgent & Important"
-          quadrant="urgent-important"
-          tasks={mockTasks}
-          removeTask={removeTask}
-        />
-      </DndContext>,
+      <TaskProvider>
+        <DndContext>
+          <QuadrantBox
+            title="Urgent & Important"
+            quadrant="urgent-important"
+          />
+        </DndContext>
+      </TaskProvider>,
     );
-    expect(screen.getByText('Write tests')).toBeInTheDocument();
+    expect(await screen.findByText('Write tests')).toBeInTheDocument();
     expect(screen.queryByText('Check emails')).not.toBeInTheDocument();
   });
 });

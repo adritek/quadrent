@@ -1,22 +1,20 @@
 import { useDroppable } from '@dnd-kit/core';
 import { TaskCard } from './TaskCard.js';
-import type { Task, Quadrant } from '../types/task.js';
+import { useTaskContext } from '../context/TaskContext.js';
+import type { Quadrant } from '../types/task.js';
 
 interface QuadrantBoxProps {
   title: string;
   quadrant: Quadrant;
-  tasks: Task[];
   className?: string;
-  removeTask: (id: string, rev: string) => Promise<void>;
 }
 
 export const QuadrantBox = ({
   title,
   quadrant,
-  tasks,
   className = '',
-  removeTask,
 }: QuadrantBoxProps) => {
+  const { tasks } = useTaskContext();
   const assigned = tasks.filter((t) => t.quadrant === quadrant);
 
   const { setNodeRef, isOver } = useDroppable({
@@ -33,7 +31,7 @@ export const QuadrantBox = ({
       </h2>
       <ul className="flex flex-col gap-2">
         {assigned.map((task) => (
-          <TaskCard removeTask={removeTask} key={task._id} task={task} />
+          <TaskCard key={task._id} taskId={task._id} />
         ))}
       </ul>
     </div>
