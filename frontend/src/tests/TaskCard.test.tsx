@@ -25,26 +25,26 @@ describe('TaskCard', () => {
     vi.mocked(tasksApi.deleteTask).mockResolvedValue(undefined);
   });
 
-  it('should render the task title', () => {
+  it('should render the task title', async () => {
     render(
       <TaskProvider>
         <DndContext>
-          <TaskCard task={mockTask} />
+          <TaskCard taskId={mockTask._id} />
         </DndContext>
       </TaskProvider>,
     );
-    expect(screen.getByText('Buy groceries')).toBeInTheDocument();
+    expect(await screen.findByText('Buy groceries')).toBeInTheDocument();
   });
 
-  it('should have a draggable role for acessibility', () => {
+  it('should have a draggable role for acessibility', async () => {
     render(
       <TaskProvider>
         <DndContext>
-          <TaskCard task={mockTask} />
+          <TaskCard taskId={mockTask._id} />
         </DndContext>
       </TaskProvider>,
     );
-    const card = screen.getByRole('button', { name: /Buy groceries/ });
+    const card = await screen.findByRole('button', { name: /Buy groceries/ });
     expect(card).toBeInTheDocument();
     expect(card).toHaveAttribute('aria-roledescription', 'draggable');
     // expect(screen.getByRole('button', { name: /draggable/i })).toBeInTheDocument();
@@ -55,12 +55,12 @@ describe('TaskCard', () => {
     render(
       <TaskProvider>
         <DndContext>
-          <TaskCard task={mockTask} />
+          <TaskCard taskId={mockTask._id} />
         </DndContext>
       </TaskProvider>,
     );
 
-    await user.click(screen.getByRole('button', { name: 'Delete task' }));
+    await user.click(await screen.findByRole('button', { name: 'Delete task' }));
 
     await waitFor(() =>
       expect(tasksApi.deleteTask).toHaveBeenCalledWith(

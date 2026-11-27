@@ -31,7 +31,7 @@ export const QuadrantBox = ({
       </h2>
       <ul className="flex flex-col gap-2">
         {assigned.map((task) => (
-          <TaskCard key={task._id} task={task} />
+          <TaskCard key={task._id} taskId={task._id} />
         ))}
       </ul>
     </div>

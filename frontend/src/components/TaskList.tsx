@@ -14,7 +14,7 @@ export const TaskList = () => {
         <p className="text-sm text-gray-400 p-2">No tasks yet</p>
       )}
       {unassigned.map((task) => (
-        <TaskCard key={task._id} task={task} />
+        <TaskCard key={task._id} taskId={task._id} />
       ))}
     </ul>
   );

@@ -4,20 +4,23 @@ import { useTaskContext } from '../context/TaskContext.js';
 import type { Task } from '../types/task.js';
 
 interface TaskCardProps {
-  task: Task;
+  taskId: Task['_id'];
 }
 
-export const TaskCard = ({ task }: TaskCardProps) => {
-  const { removeTask } = useTaskContext();
+export const TaskCard = ({ taskId }: TaskCardProps) => {
+  const { tasks, removeTask } = useTaskContext();
+  const task = tasks.find((currentTask) => currentTask._id === taskId);
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable(
+    {
+      id: taskId,
+    },
+  );
+
+  if (!task) return null;
+
   const stopPropagation = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.stopPropagation();
   };
-
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable(
-    {
-      id: task._id,
-    },
-  );
 
   const style = {
     transform: CSS.Translate.toString(transform),
