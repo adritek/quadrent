@@ -1,6 +1,6 @@
 import { DndContext } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core';
-import { useTasks } from './hooks/useTasks.js';
+import { useTaskContext } from './context/TaskContext.js';
 import { useWakeUp } from './hooks/useWakeUp.js';
 import { TaskInput } from './components/TaskInput.js';
 import { TaskList } from './components/TaskList.js';
@@ -10,8 +10,7 @@ import { DevPanel } from './mocks/DevPanel.js';
 
 export default function App() {
   const { isWakingUp, wakeupError } = useWakeUp();
-  const { tasks, isLoading, error, removeTask, addTask, moveTask, refetch } =
-    useTasks();
+  const { tasks, refetch, moveTask } = useTaskContext();
 
   if (isWakingUp) {
     return (
@@ -60,18 +59,13 @@ export default function App() {
             <h1 className="text-lg font-bold text-gray-800">Quadrent</h1>
             <p className="text-xs text-gray-500">Drag tasks into the matrix</p>
           </div>
-          <TaskInput onAdd={addTask} />
-          <TaskList
-            tasks={tasks}
-            isLoading={isLoading}
-            error={error}
-            removeTask={removeTask}
-          />
+          <TaskInput />
+          <TaskList />
         </aside>
 
         {/* Right — quadrant grid */}
         <main className="flex-1">
-          <QuadrantGrid removeTask={removeTask} tasks={tasks} />
+          <QuadrantGrid />
         </main>
         <DevPanel onRefetch={refetch} />
       </div>

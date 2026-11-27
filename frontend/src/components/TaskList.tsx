@@ -1,19 +1,8 @@
 import { TaskCard } from './TaskCard.js';
-import type { Task } from '../types/task.js';
+import { useTaskContext } from '../context/TaskContext.js';
 
-interface TaskListProps {
-  tasks: Task[];
-  isLoading: boolean;
-  error: string | null;
-  removeTask: (id: string, rev: string) => Promise<void>;
-}
-
-export const TaskList = ({
-  tasks,
-  isLoading,
-  error,
-  removeTask,
-}: TaskListProps) => {
+export const TaskList = () => {
+  const { tasks, isLoading, error } = useTaskContext();
   const unassigned = tasks.filter((t) => t.quadrant === null);
 
   if (isLoading) return <p className="p-4 text-sm text-gray-500">Loading...</p>;
@@ -25,7 +14,7 @@ export const TaskList = ({
         <p className="text-sm text-gray-400 p-2">No tasks yet</p>
       )}
       {unassigned.map((task) => (
-        <TaskCard key={task._id} task={task} removeTask={removeTask} />
+        <TaskCard key={task._id} task={task} />
       ))}
     </ul>
   );

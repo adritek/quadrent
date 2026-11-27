@@ -1,13 +1,14 @@
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
+import { useTaskContext } from '../context/TaskContext.js';
 import type { Task } from '../types/task.js';
 
 interface TaskCardProps {
   task: Task;
-  removeTask: (id: string, rev: string) => Promise<void>;
 }
 
-export const TaskCard = ({ task, removeTask }: TaskCardProps) => {
+export const TaskCard = ({ task }: TaskCardProps) => {
+  const { removeTask } = useTaskContext();
   const stopPropagation = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.stopPropagation();
   };

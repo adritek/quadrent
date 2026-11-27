@@ -1,9 +1,13 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DndContext } from '@dnd-kit/core';
 import { TaskCard } from '../components/TaskCard';
+import { TaskProvider } from '../context/TaskProvider';
 import type { Task } from '../types/task.js';
+import * as tasksApi from '../api/tasks';
+
+vi.mock('../api/tasks');
 
 const mockTask: Task = {
   _id: 'abc123',
@@ -15,22 +19,30 @@ const mockTask: Task = {
 };
 
 describe('TaskCard', () => {
-  const removeTask = vi.fn().mockResolvedValue(undefined);
+  beforeEach(() => {
+    vi.resetAllMocks();
+    vi.mocked(tasksApi.getTasks).mockResolvedValue([mockTask]);
+    vi.mocked(tasksApi.deleteTask).mockResolvedValue(undefined);
+  });
 
   it('should render the task title', () => {
     render(
-      <DndContext>
-        <TaskCard task={mockTask} removeTask={removeTask} />
-      </DndContext>,
+      <TaskProvider>
+        <DndContext>
+          <TaskCard task={mockTask} />
+        </DndContext>
+      </TaskProvider>,
     );
     expect(screen.getByText('Buy groceries')).toBeInTheDocument();
   });
 
   it('should have a draggable role for acessibility', () => {
     render(
-      <DndContext>
-        <TaskCard task={mockTask} removeTask={removeTask} />
-      </DndContext>,
+      <TaskProvider>
+        <DndContext>
+          <TaskCard task={mockTask} />
+        </DndContext>
+      </TaskProvider>,
     );
     const card = screen.getByRole('button', { name: /Buy groceries/ });
     expect(card).toBeInTheDocument();
@@ -41,13 +53,20 @@ describe('TaskCard', () => {
   it('calls removeTask with the task id and revision when deleted', async () => {
     const user = userEvent.setup();
     render(
-      <DndContext>
-        <TaskCard task={mockTask} removeTask={removeTask} />
-      </DndContext>,
+      <TaskProvider>
+        <DndContext>
+          <TaskCard task={mockTask} />
+        </DndContext>
+      </TaskProvider>,
     );
 
     await user.click(screen.getByRole('button', { name: 'Delete task' }));
 
-    expect(removeTask).toHaveBeenCalledWith(mockTask._id, mockTask._rev);
+    await waitFor(() =>
+      expect(tasksApi.deleteTask).toHaveBeenCalledWith(
+        mockTask._id,
+        mockTask._rev,
+      ),
+    );
   });
 });

@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
+import { TaskProvider } from './context/TaskProvider.js';
 
 async function enableMocking() {
   if (import.meta.env.MODE !== 'development') return;
@@ -15,7 +16,9 @@ async function enableMocking() {
 enableMocking().then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <App />
+      <TaskProvider>
+        <App />
+      </TaskProvider>
     </StrictMode>,
   );
 });
